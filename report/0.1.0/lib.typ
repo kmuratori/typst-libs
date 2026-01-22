@@ -1,6 +1,3 @@
-// TODO: complete the header/footer
-// TODO: custom table, ...
-
 #import "@local/util:0.1.0": current_h
 
 #let conf(
@@ -65,7 +62,7 @@
       align(center)[ #text(size: 26pt, weight: "bold", fill: colors.primary, upper(it)) ]
       v(20pt)
     } else if it.level == 2 {
-      text(size: 20pt, weight: "bold", fill: colors.primary, it)
+      text(size: 20pt, weight: "bold", fill: colors.primary, underline(it))
       v(10pt)
     } else if it.level == 3 {
       text(size: 16pt, weight: "semibold", fill: colors.secondary, it)
@@ -84,7 +81,7 @@
   set table(
     inset: 6pt,
     stroke: 0.5pt,
-    fill: (x, y) => { if y == 0 or x == 0 { colors.primary.lighten(90%) } }
+    fill: (x, y) => { if y == 0 or x == 0 { colors.primary.lighten(95%) } }
   )
 
   show raw.where(block: true): it => block(
@@ -170,11 +167,22 @@
       if no_header { none }
       else {
         grid(
-          // columns: (1fr, 1fr),
-          columns: (1fr, 1fr, 1fr),
-          align: (left, center, right),
-          [ #upper(current_h(h_level)) ],
-          [ #top_corners.left ],
+          columns: (1fr, 1fr),
+          align: (left, right),
+          [
+            #block[
+              #let txt = upper(text(weight: "bold", fill: colors.primary, current_h(h_level)))
+              #context {
+                let size = measure(txt)
+                stack(
+                  dir: ttb,
+                  spacing: 2.4pt,
+                  txt,
+                  line(length: size.width * 0.35, stroke: 1.6pt + colors.primary)
+                )
+              }
+            ]
+          ],
           [ #context { [ #counter(page).display() / #counter(page).final().last() ] } ],
         )
       }
