@@ -8,6 +8,7 @@
   supervisors : ("Supervisor No.1", "Supervisor No.2"),
   top_corners : ( left: none, right: none ),
   colors      : ( primary: rgb("#1e3a8a"), secondary: rgb("#6b7280") ),
+  raw_ln      : false,
   no_numbering: ( headings: false, pages: true ),
   // TODO: accept string values that specifu the
   // applied header/footer style: style1, style2
@@ -49,7 +50,7 @@
     let raw = nums.pos()
     let len = raw.len()
          if len == 1 { numbering("I.", raw.at(0))              }
-    else if len == 2 { numbering("A.", raw.at(1))              }
+    else if len == 2 { numbering("1.", raw.at(1))              }
     else if len == 3 { numbering("1.a.", raw.at(1), raw.at(2)) }
     else if len == 4 { numbering("i.", raw.last())             }
     else if len == 5 { none                                    }
@@ -84,14 +85,24 @@
     fill: (x, y) => { if y == 0 or x == 0 { colors.primary.lighten(95%) } }
   )
 
-  show raw.where(block: true): it => block(
-    fill: colors.primary.lighten(95%),
-    inset: 8pt,
-    radius: 0pt,
-    stroke: none,
-    width: 100%,
-    it,
-  )
+  show raw.where(block: true): it => {
+    // FIXME
+    // if raw_ln {
+      // show raw.line: line => {
+      //   text(fill: colors.primary)[#line.number]
+      //   h(1em)
+      //   line.body
+      // }
+    // }
+    block(
+      fill: colors.primary.lighten(95%),
+      inset: 8pt,
+      radius: 0pt,
+      stroke: none,
+      width: 100%,
+      it,
+    )
+  }
   // End config
 
   align(center)[

@@ -22,7 +22,7 @@
 }
 
 #let current_h(level) = context {
-  assert(level >= 1 and level <= 6, message: "Heading level must be between 1 and 6.")
+  // assert(level >= 1 and level <= 6, message: "Heading level must be between 1 and 6.")
   let headings = query(heading.where(level: level).before(here()))
 
   if headings.len() > 0 { headings.last().body }

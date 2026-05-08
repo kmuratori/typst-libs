@@ -6,6 +6,8 @@
 code starter:
 
 ```typ
+// include the lib
+// #import "@local/report:0.1.0": conf
 #show: conf.with(
   authors: (),
   supervisors: (),
